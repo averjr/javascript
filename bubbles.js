@@ -7,8 +7,7 @@
     }
     
     function Game(){
-        var 
-            width = 500,
+       var  width = 500,
             height = 500,
             ctx,
             canvas,
