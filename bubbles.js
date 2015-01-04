@@ -1,66 +1,78 @@
 (function(){
-    var game;
-
-    window.onload = function() {
-        game = new Game();    
-        return;
-    }
-    
-    function Game(){
-       var  width = 500,
-            height = 500,
-            ctx,
-            canvas,
-            objects = [];
-
-        this.init = function() {
-            canvas = document.getElementById('bubbles');
-			ctx = canvas.getContext('2d');
-
-            objects.push(new Circle(60,60), new Circle(160, 160) );
-            canvas.addEventListener('click', function(e){
-                this.checkHit(e.clientX, e.clientY);
-            }.bind(this));
-            
-            this.render();
+    var circles = {
+        circles : [],
+        add: function(circle){
+            this.circles.push(circle);
         }
+    };
+   
+    var game = {
+         init: function() {
+            circles.add(new Circle(60, 60));
+            circles.add(new Circle(160, 160));
+            view.init();
+            view.render(circles.circles);           
+         }, 
 
-        this.render = function() {
-          	ctx.clearRect(0, 0, width, height);
-            for(var i=0; i<objects.length; i++ ) {
-                ctx.beginPath();
+         checkHit:  function(cx, cy) {
+            //Objects are passed by "copy of a reference"
+            var objects = circles.circles
 
-        	    ctx.fillStyle = '#000';
-        	    ctx.arc(objects[i].x,
-                        objects[i].y,
-                        objects[i].radius,
-                        0,
-                        Math.PI*2,
-                        true);
-    	    	ctx.fill();
-    
-        	    ctx.fillStyle = '#fff';
-    		    ctx.font = 10 + 'px Helvetica';
-            	ctx.fillText(objects[i].counter, 
-                             objects[i].x,
-                             objects[i].y);
-            }
-        }
-
-        this.checkHit = function(cx, cy) {
             for(var i=0; i<objects.length; i++){
                 var distancesquared = (objects[i].x - cx) * (objects[i].x - cx) + (objects[i].y - cy) * (objects[i].y - cy);
 
                 if(distancesquared <= objects[i].radius * objects[i].radius) {
                     objects[i].counter = objects[i].counter + 1;
                  
-                    this.render();
+                    view.render(objects);
                 }
             }
-        }
+          }
 
-        this.init();
+    };
+    
+    var view = {
+        init: function() {
+           this.width = 500;
+           this.height = 500;
+
+           var canvas = document.getElementById('bubbles');
+		   this.ctx = canvas.getContext('2d');
+            
+           canvas.addEventListener('click', function(e){
+                game.checkHit(e.clientX, e.clientY);
+           }.bind(this));
+            
+           
+        },
+
+        render: function(objects) {
+            var ctx = this.ctx;
+
+           	ctx.clearRect(0, 0, this.width, this.height);
+            for(var i=0; i<objects.length; i++ ) {
+                this.ctx.beginPath();
+
+        	    this.ctx.fillStyle = '#000';
+        	    this.ctx.arc(objects[i].x,
+                        objects[i].y,
+                        objects[i].radius,
+                        0,
+                        Math.PI*2,
+                        true);
+    	    	this.ctx.fill();
+    
+        	    this.ctx.fillStyle = '#fff';
+    		    this.ctx.font = 10 + 'px Helvetica';
+            	this.ctx.fillText(objects[i].counter, 
+                             objects[i].x,
+                             objects[i].y);
+            }
+                
+        }   
     }
+    
+    game.init();
     
     function Circle(x,y){
         this.x = x;
