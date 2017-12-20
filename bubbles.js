@@ -7,18 +7,23 @@
         CIRCLE_RADIUS = 30;
 
     function Figure() {
-        //
+
     }
 
-    Figure.prototype = {
-        clicked: function (x, y) {
-            throw new TypeError("Method not implemented");
-        },
+    //Figure.prototype = {
+    //    clicked: function(x, y) {
+    //        throw new TypeError("Method not implemented");
+    //    },
 
-        draw: function (ctx) {
-            throw new TypeError("Method not implemented");
-        }
-    };
+    //    draw: function(ctx) {
+    //        throw new TypeError("Method not implemented");
+    //    }
+    //};
+
+    //function Rectangle(){
+
+    //}
+    //Rectangle.prototype = Object.create(Figure.prototype);
 
     function Circle(x, y) {
         this.counter = DEFAULT_COUNTER;
@@ -42,10 +47,7 @@
             true);
     };
 
-    //function Rectangle(){
-    //
-    //}
-    //Rectangle.prototype = Object.create(Figure.prototype);
+
 
     function Model() {
         this.collection = [];
@@ -60,7 +62,7 @@
         this.view = View;
 
         this.init();
-    }
+    };
 
     Game.prototype.init = function () {
         var context = this;
@@ -94,7 +96,7 @@
         this.width = 500;
         this.height = 500;
         this.ctx = this.canvas.getContext('2d');
-    }
+    };
 
     View.prototype.render = function (objects) {
         this.ctx.clearRect(0, 0, this.width, this.height);
