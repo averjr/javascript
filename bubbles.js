@@ -43,7 +43,7 @@
     };
 
     //function Rectangle(){
-    //    //
+    //
     //}
     //Rectangle.prototype = Object.create(Figure.prototype);
 
