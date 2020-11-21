@@ -1,4 +1,4 @@
 javascript
 ==========
 
-Demonstration of my JS skills
+play around with JS
